@@ -1,0 +1,33 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+// Estructura para los productos
+struct Producto {
+    char product[50];
+    int cantidad;
+};
+
+// Arreglo de productos
+struct Producto producto[100];
+int prod = 8;
+
+
+// Cargar productos iniciales
+void cargarproductos() {
+    strcpy(producto[0].product, "001.Pimiento"); producto[0].cantidad = 50;
+    strcpy(producto[1].product, "002.Cebolla"); producto[1].cantidad = 30;
+    strcpy(producto[2].product, "003.Ajo"); producto[2].cantidad = 20;
+    strcpy(producto[3].product, "004.Pepino"); producto[3].cantidad = 40;
+    strcpy(producto[4].product, "005.Fideos Don Vitorio"); producto[4].cantidad = 100;
+    strcpy(producto[5].product, "006.lb Arroz(Super Extra)"); producto[5].cantidad = 200;
+    strcpy(producto[6].product, "007.lb Harina"); producto[6].cantidad = 150;
+    strcpy(producto[7].product, "008.lb Azucar"); producto[7].cantidad = 90;
+}
+
+// Función para listar productos
+void lista_productos() {
+    for (int i = 0; i < prod; i++) { 
+        printf(" %d: [Producto: %s]\n", i + 1, producto[i].product);
+    }
+}
