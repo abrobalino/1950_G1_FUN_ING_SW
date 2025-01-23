@@ -1,0 +1,242 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+// Estructura para los productos
+struct Producto {
+    char product[50];
+    int cantidad;
+};
+
+// Arreglo de productos
+struct Producto producto[100];
+int prod = 8;
+
+
+// Cargar productos iniciales
+void cargarproductos() {
+    strcpy(producto[0].product, "001.Pimiento"); producto[0].cantidad = 50;
+    strcpy(producto[1].product, "002.Cebolla"); producto[1].cantidad = 30;
+    strcpy(producto[2].product, "003.Ajo"); producto[2].cantidad = 20;
+    strcpy(producto[3].product, "004.Pepino"); producto[3].cantidad = 40;
+    strcpy(producto[4].product, "005.Fideos Don Vitorio"); producto[4].cantidad = 100;
+    strcpy(producto[5].product, "006.lb Arroz(Super Extra)"); producto[5].cantidad = 200;
+    strcpy(producto[6].product, "007.lb Harina"); producto[6].cantidad = 150;
+    strcpy(producto[7].product, "008.lb Azucar"); producto[7].cantidad = 90;
+}
+
+// Función para listar productos
+void lista_productos() {
+    for (int i = 0; i < prod; i++) { 
+        printf(" %d: [Producto: %s]\n", i + 1, producto[i].product);
+    }
+}
+
+// Función para agregar productos
+void agregar_producto() {
+    if (prod < 100) {  
+        char nuevo_producto[50];
+        printf("Ingrese el nombre del nuevo producto : ");
+        getchar();  
+        fgets(nuevo_producto, 50, stdin);
+        nuevo_producto[strcspn(nuevo_producto, "\n")] ; 
+        
+        sprintf(producto[prod].product, "%03d.%s", prod + 1, nuevo_producto);
+        prod++;  
+        printf("Producto agregado exitosamente.\n");
+    } else {
+        printf("No se pueden agregar mas productos. Capacidad maxima alcanzada.\n");
+    }
+}
+// Función para buscar productos
+void buscar_producto() {
+    char termino[50];
+    int encontrado = 0;
+
+    printf("Ingrese el nombre o fragmento del producto a buscar: ");
+    getchar(); 
+    fgets(termino, 50, stdin);
+    termino[strcspn(termino, "\n")]; 
+
+    printf("\nResultados de busqueda:\n");
+    for (int i = 0; i < prod; i++) {
+        if (strstr(producto[i].product, termino) != NULL) {
+            printf(" %d: [Producto: %s]\n", i + 1, producto[i].product);
+            encontrado = 1;
+        }
+    }
+
+    if (!encontrado) {
+        printf("No se encontraron productos que coincidan con '%s'.\n", termino);
+    }
+}
+
+// Función para entrada de productos
+void entrada_producto() {
+    char termino[50];
+    int cantidad;
+    int encontrado = 0;
+
+    printf("Ingrese el codigo o nombre del producto para aumentar su cantidad: ");
+    getchar();
+    fgets(termino, 50, stdin);
+    termino[strcspn(termino, "\n")] = '\0';
+
+    for (int i = 0; i < prod; i++) {
+        if (strstr(producto[i].product, termino) != NULL) {
+            printf("Producto encontrado: %s (Cantidad actual: %d)\n", producto[i].product, producto[i].cantidad);
+            printf("Ingrese la cantidad a agregar: ");
+            scanf("%d", &cantidad);
+            producto[i].cantidad += cantidad;
+            printf("Cantidad actualizada. Nueva cantidad: %d\n", producto[i].cantidad);
+            encontrado = 1;
+            break;
+        }
+    }
+
+    if (!encontrado) {
+        printf("No se encontro el producto con el codigo o nombre '%s'.\n", termino);
+    }
+}
+
+// Función para salida de productos
+void salida_producto() {
+    char termino[50];
+    int cantidad;
+    int encontrado = 0;
+
+    printf("Ingrese el codigo o nombre del producto para disminuir su cantidad: ");
+    getchar();
+    fgets(termino, 50, stdin);
+    termino[strcspn(termino, "\n")] = '\0';
+
+    for (int i = 0; i < prod; i++) {
+        if (strstr(producto[i].product, termino) != NULL) {
+            printf("Producto encontrado: %s (Cantidad actual: %d)\n", producto[i].product, producto[i].cantidad);
+            printf("Ingrese la cantidad a retirar: ");
+            scanf("%d", &cantidad);
+
+            if (cantidad <= producto[i].cantidad) {
+                producto[i].cantidad -= cantidad;
+                printf("Cantidad actualizada. Nueva cantidad: %d\n", producto[i].cantidad);
+            } else {
+                printf("Cantidad insuficiente en inventario.\n");
+            }
+
+            encontrado = 1;
+            break;
+        }
+    }
+
+    if (!encontrado) {
+        printf("No se encontro el producto con el codigo o nombre '%s'.\n", termino);
+    }
+}
+
+// Función para eliminar productos
+void eliminar_producto() {
+    char termino[50];
+    int encontrado = -1;
+
+    printf("Ingrese el nombre o codigo del producto a eliminar: ");
+    getchar(); 
+    fgets(termino, 50, stdin);
+    termino[strcspn(termino, "\n")] = 0; 
+
+    for (int i = 0; i < prod; i++) {
+        if (strstr(producto[i].product, termino) != NULL) {
+            encontrado = i;
+            break;
+        }
+    }
+
+    if (encontrado != -1) {
+        printf("Producto eliminado: %s\n", producto[encontrado].product);
+        for (int i = encontrado; i < prod - 1; i++) {
+            strcpy(producto[i].product, producto[i + 1].product);
+        }
+        prod--;
+    } else {
+        printf("No se encontro un producto que coincida con '%s'.\n", termino);
+    }
+}
+
+//Funcion para guardar el archivo
+
+void guardar() {
+    // Abre el archivo en modo escritura
+    FILE *archivo = fopen("productos.txt", "w");
+
+    // Verifica si el archivo se abrió correctamente
+    if (archivo == NULL) {
+        printf("Error al abrir el archivo.\n");
+        return;
+    }
+
+    // Escribe los productos en el archivo
+    for (int i = 0; i < prod; i++) {
+        fprintf(archivo, "%d: [Producto: %s]\n", i + 1, producto[i].product);
+    }
+
+    // Cierra el archivo
+    fclose(archivo);
+
+    printf("Lista de productos guardada exitosamente en 'productos.txt'.\n");
+}
+
+
+
+// Menú principal
+int main() {
+    int opc;
+
+    // Cargar productos iniciales
+    cargarproductos();
+
+    do {
+        // Menú principal
+        printf("\n***** Seleccione una opcion: *****\n");
+        printf("1. Visualizar la lista de productos disponibles\n");
+        printf("2. Agregar productos\n");
+        printf("3. Busqueda de productos\n");
+        printf("4. Entrada de productos\n");
+        printf("5. Salida de productos\n");
+        printf("6. Eliminar productos\n");
+        printf("7. Generar reporte\n");
+        printf("8. Salir\n");
+        printf("Ingrese su opcion: ");
+        scanf("%d", &opc);
+
+        // Manejo de opciones del menu
+        switch (opc) {
+            case 1:
+                lista_productos();
+                break;
+            case 2:
+                agregar_producto();
+                break;
+            case 3:
+                buscar_producto();
+                break;
+            case 4:
+                entrada_producto();
+                break;
+            case 5:
+                salida_producto();
+                break;
+            case 6:
+                eliminar_producto();
+                break;
+            case 7:
+                guardar();
+                break;
+            case 8:
+                printf("Saliendo del programa. ¡Hasta luego!\n");
+                break;
+            default:
+                printf("Opción incorrecta. Intente nuevamente.\n");
+        }
+    } while (opc != 8);
+
+    return 0;
+}
