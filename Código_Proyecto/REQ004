@@ -1,0 +1,27 @@
+// Función para entrada de productos
+void entrada_producto() {
+    char termino[50];
+    int cantidad;
+    int encontrado = 0;
+
+    printf("Ingrese el codigo o nombre del producto para aumentar su cantidad: ");
+    getchar();
+    fgets(termino, 50, stdin);
+    termino[strcspn(termino, "\n")] = '\0';
+
+    for (int i = 0; i < prod; i++) {
+        if (strstr(producto[i].product, termino) != NULL) {
+            printf("Producto encontrado: %s (Cantidad actual: %d)\n", producto[i].product, producto[i].cantidad);
+            printf("Ingrese la cantidad a agregar: ");
+            scanf("%d", &cantidad);
+            producto[i].cantidad += cantidad;
+            printf("Cantidad actualizada. Nueva cantidad: %d\n", producto[i].cantidad);
+            encontrado = 1;
+            break;
+        }
+    }
+
+    if (!encontrado) {
+        printf("No se encontro el producto con el codigo o nombre '%s'.\n", termino);
+    }
+}
