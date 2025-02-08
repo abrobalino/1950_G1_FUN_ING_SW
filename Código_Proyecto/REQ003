@@ -1,54 +1,26 @@
-// Función para agregar productos
-void agregar_producto() {
-    if (prod < 100) {  
-        char nuevo_producto[50];
-        printf("Ingrese el nombre del nuevo producto : ");
-        getchar();  
-        fgets(nuevo_producto, 50, stdin);
-        nuevo_producto[strcspn(nuevo_producto, "\n")] ; 
-        
-        sprintf(producto[prod].product, "%03d.%s", prod + 1, nuevo_producto);
-        prod++;  
-        printf("Producto agregado exitosamente.\n");
-    } else {
-        printf("No se pueden agregar mas productos. Capacidad maxima alcanzada.\n");
-    }
-}
-// Función para agregar productos
-void agregar_producto() {
-    if (prod < 100) {  
-        char nuevo_producto[50];
-        printf("Ingrese el nombre del nuevo producto : ");
-        getchar();  
-        fgets(nuevo_producto, 50, stdin);
-        nuevo_producto[strcspn(nuevo_producto, "\n")] ; 
-        
-        sprintf(producto[prod].product, "%03d.%s", prod + 1, nuevo_producto);
-        prod++;  
-        printf("Producto agregado exitosamente.\n");
-    } else {
-        printf("No se pueden agregar mas productos. Capacidad maxima alcanzada.\n");
-    }
-}
-// Función para buscar productos
-void buscar_producto() {
+void entrada_producto() {
     char termino[50];
+    int cantidad;
     int encontrado = 0;
 
-    printf("Ingrese el nombre o fragmento del producto a buscar: ");
-    getchar(); 
+    printf("Ingrese el codigo o nombre del producto para aumentar su cantidad: ");
+    getchar();
     fgets(termino, 50, stdin);
-    termino[strcspn(termino, "\n")]; 
+    termino[strcspn(termino, "\n")] = '\0';
 
-    printf("\nResultados de busqueda:\n");
     for (int i = 0; i < prod; i++) {
         if (strstr(producto[i].product, termino) != NULL) {
-            printf(" %d: [Producto: %s]\n", i + 1, producto[i].product);
+            printf("Producto encontrado: %s (Cantidad actual: %d)\n", producto[i].product, producto[i].cantidad);
+            printf("Ingrese la cantidad a agregar: ");
+            scanf("%d", &cantidad);
+            producto[i].cantidad += cantidad;
+            printf("Cantidad actualizada. Nueva cantidad: %d\n", producto[i].cantidad);
             encontrado = 1;
+            break;
         }
     }
 
     if (!encontrado) {
-        printf("No se encontraron productos que coincidan con '%s'.\n", termino);
+        printf("No se encontro el producto con el codigo o nombre '%s'.\n", termino);
     }
 }
