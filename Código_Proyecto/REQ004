@@ -1,10 +1,9 @@
-// Función para entrada de productos
-void entrada_producto() {
+void salida_producto() {
     char termino[50];
     int cantidad;
     int encontrado = 0;
 
-    printf("Ingrese el codigo o nombre del producto para aumentar su cantidad: ");
+    printf("Ingrese el codigo o nombre del producto para disminuir su cantidad: ");
     getchar();
     fgets(termino, 50, stdin);
     termino[strcspn(termino, "\n")] = '\0';
@@ -12,10 +11,16 @@ void entrada_producto() {
     for (int i = 0; i < prod; i++) {
         if (strstr(producto[i].product, termino) != NULL) {
             printf("Producto encontrado: %s (Cantidad actual: %d)\n", producto[i].product, producto[i].cantidad);
-            printf("Ingrese la cantidad a agregar: ");
+            printf("Ingrese la cantidad a retirar: ");
             scanf("%d", &cantidad);
-            producto[i].cantidad += cantidad;
-            printf("Cantidad actualizada. Nueva cantidad: %d\n", producto[i].cantidad);
+
+            if (cantidad <= producto[i].cantidad) {
+                producto[i].cantidad -= cantidad;
+                printf("Cantidad actualizada. Nueva cantidad: %d\n", producto[i].cantidad);
+            } else {
+                printf("Cantidad insuficiente en inventario.\n");
+            }
+
             encontrado = 1;
             break;
         }
