@@ -1,0 +1,40 @@
+// Funcion para eliminar productos
+void eliminar_producto() {
+    char termino[50];
+    int encontrado = -1;
+    char confirmar;
+
+    printf("Ingrese el nombre o codigo del producto a eliminar: ");
+    getchar();  
+    fgets(termino, 50, stdin);
+    termino[strcspn(termino, "\n")] = 0;  
+
+    for (int i = 0; i < prod; i++) {
+        if (strstr(producto[i].product, termino) != NULL) {
+            encontrado = i;
+            break;
+        }
+    }
+
+    if (encontrado != -1) {
+        // Preguntar si esta seguro de eliminar el producto
+        printf("Producto encontrado: %s. Esta seguro de que desea eliminarlo (V/F): ", producto[encontrado].product);
+        scanf(" %c", &confirmar);
+        confirmar = toupper(confirmar); 
+
+        if (confirmar == 'V') {
+            printf("Producto eliminado: %s\n", producto[encontrado].product);
+            for (int i = encontrado; i < prod - 1; i++) {
+                strcpy(producto[i].product, producto[i + 1].product);
+                producto[i].cantidad = producto[i + 1].cantidad;  
+            }
+            prod--;
+        } else if (confirmar == 'F') {
+            printf("Accion cancelada. No se elimino ningun producto.\n");
+        } else {
+            printf("Accion no valida.\n");
+        }
+    } else {
+        printf("No se encontro un producto que coincida con '%s'.\n", termino);
+    }
+}
