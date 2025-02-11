@@ -1,3 +1,4 @@
+// Revisar
 void agregar_producto() {
     if (prod < 100) {  
         char nuevo_producto[50];
