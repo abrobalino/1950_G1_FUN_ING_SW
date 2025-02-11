@@ -1,0 +1,16 @@
+//Funcion para guardar el archivo
+
+void guardar() {
+    // Abre el archivo en modo escritura
+    FILE *archivo = fopen("productos.txt", "w");
+    if (archivo == NULL) {
+        printf("Error al abrir el archivo.\n");
+        return;
+    }
+    for (int i = 0; i < prod; i++) {
+        fprintf(archivo, "%d: [Producto: %s]\n", i + 1, producto[i].product);
+    }
+    fclose(archivo);
+
+    printf("Lista de productos guardada exitosamente en 'productos.txt'.\n");
+}
