@@ -1,0 +1,23 @@
+// Funcion para buscar productos
+void buscar_producto() {
+    char termino[50];
+    int encontrado = 0;
+
+    printf("Ingrese el nombre o fragmento del producto a buscar: ");
+    getchar();  
+    fgets(termino, 50, stdin);
+
+    termino[strcspn(termino, "\n")] = '\0';
+
+    printf("\nResultados de busqueda:\n");
+    for (int i = 0; i < prod; i++) {
+        if (strstr(producto[i].product, termino) != NULL) {
+            printf(" %d: [Producto: %s] (Cantidad: %d)\n", i + 1, producto[i].product, producto[i].cantidad);
+            encontrado = 1;
+        }
+    }
+
+    if (!encontrado) {
+        printf("No se encontraron productos que coincidan con '%s'.\n", termino);
+    }
+}

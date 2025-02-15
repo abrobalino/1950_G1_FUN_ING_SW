@@ -1,0 +1,48 @@
+// Funcion para salida de productos
+void salida_producto() {
+    char termino[50];
+    int cantidad;
+    int encontrado = 0;
+    char confirmar;
+
+    printf("Ingrese el codigo o nombre del producto para disminuir su cantidad: ");
+    getchar(); 
+    fgets(termino, 50, stdin);
+    termino[strcspn(termino, "\n")] = '\0';
+
+    for (int i = 0; i < prod; i++) {
+        if (strstr(producto[i].product, termino) != NULL) {
+            printf("\nProducto encontrado: %s (Cantidad actual: %d)\n", producto[i].product, producto[i].cantidad);
+            printf("Ingrese la cantidad a retirar: ");
+            if (scanf("%d", &cantidad) != 1 || cantidad <= 0) {
+                printf("Error: Cantidad invalida.\n");
+                while (getchar() != '\n'); 
+                return;
+            }
+
+            printf("Esta seguro de que desea retirar %d de '%s' (V/F): ", cantidad, producto[i].product);
+            scanf(" %c", &confirmar);
+            confirmar = toupper(confirmar); 
+
+            if (confirmar == 'V') {
+                if (cantidad <= producto[i].cantidad) {
+                    producto[i].cantidad -= cantidad;
+                    printf("\nCantidad actualizada. Nueva cantidad: %d\n", producto[i].cantidad);
+                } else {
+                    printf("\nCantidad insuficiente en inventario.\n");
+                }
+            } else if (confirmar == 'F') {
+                printf("\nNo se realizo ningun cambio.\n");
+            } else {
+                printf("\nOpcion no valida.\n");
+            }
+
+            encontrado = 1;
+            break;
+        }
+    }
+
+    if (!encontrado) {
+        printf("\nNo se encontro el producto con el codigo o nombre '%s'.\n", termino);
+    }
+}

@@ -1,0 +1,46 @@
+// Funcion para entrada de productos
+void entrada_producto() {
+    char termino[50];
+    int cantidad;
+    int encontrado = 0;
+    char confirmar;
+
+    printf("Ingrese el codigo o nombre del producto para aumentar su cantidad: ");
+    getchar(); 
+    fgets(termino, 50, stdin);
+    termino[strcspn(termino, "\n")] = '\0';
+
+    if (strlen(termino) == 0) {
+        printf("Error: No ingreso ningun valor. Intente nuevamente.\n");
+        return;
+    }
+
+    for (int i = 0; i < prod; i++) {
+        if (strstr(producto[i].product, termino) != NULL) {
+            printf("\nProducto encontrado: %s (Cantidad actual: %d)\n", producto[i].product, producto[i].cantidad);
+            printf("Ingrese la cantidad a agregar: ");
+            if (scanf("%d", &cantidad) != 1 || cantidad <= 0) {
+                printf("Error: Cantidad invalida. Solo se aceptan numeros positivos.\n");
+                while (getchar() != '\n');  
+                return;
+            }
+
+            printf("Esta seguro de que desea agregar %d a '%s' (V/F): ", cantidad, producto[i].product);
+            scanf(" %c", &confirmar);
+            confirmar = toupper(confirmar);
+
+            if (confirmar == 'V') {
+                producto[i].cantidad += cantidad;
+                printf("\nCantidad actualizada. Nueva cantidad: %d\n", producto[i].cantidad);
+            } else if (confirmar == 'F') {
+                printf("\n No se realizo ningun cambio.\n");
+            } else {
+                printf("\nOpcion no valida..\n");
+            }
+
+            encontrado = 1;
+            break;
+        }}if (!encontrado) {
+        printf("\nNo se encontro el producto con el codigo o nombre '%s'.\n", termino);
+    }
+}
