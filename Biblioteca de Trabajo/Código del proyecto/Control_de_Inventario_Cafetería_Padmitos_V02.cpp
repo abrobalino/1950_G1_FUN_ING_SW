@@ -42,7 +42,7 @@ void agregar_producto() {
         char confirmar;
 
         printf("Ingrese el nombre del nuevo producto: ");
-        getchar();
+
         fgets(nuevo_producto, 50, stdin);
 
         nuevo_producto[strcspn(nuevo_producto, "\n")] = '\0';

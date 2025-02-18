@@ -1,0 +1,8 @@
+1: [Producto: 001.Pimiento]
+2: [Producto: 002.Cebolla]
+3: [Producto: 003.Ajo]
+4: [Producto: 004.Pepino]
+5: [Producto: 005.Fideos Don Vitorio]
+6: [Producto: 006.lb Arroz(Super Extra)]
+7: [Producto: 007.lb Harina]
+8: [Producto: 008.lb Azucar]
