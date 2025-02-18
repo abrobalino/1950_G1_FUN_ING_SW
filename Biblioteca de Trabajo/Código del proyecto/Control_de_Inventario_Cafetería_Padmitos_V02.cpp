@@ -247,7 +247,7 @@ void guardar() {
         return;
     }
     for (int i = 0; i < prod; i++) {
-        fprintf(archivo, "%d: [Producto: %s]\n", i + 1, producto[i].product);
+        fprintf(archivo, "%d: [Producto: %s] [Cantidad: %d]\n", i + 1, producto[i].product, producto[i].cantidad);
     }
     fclose(archivo);
 
